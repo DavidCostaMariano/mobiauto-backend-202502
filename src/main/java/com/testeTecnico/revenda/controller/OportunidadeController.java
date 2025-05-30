@@ -1,6 +1,7 @@
 package com.testeTecnico.revenda.controller;
 
 import com.testeTecnico.revenda.model.request.ClienteRequestDTO;
+import com.testeTecnico.revenda.model.request.ModificaOportunidadeRequestDTO;
 import com.testeTecnico.revenda.model.request.OportunidadeRequestDTO;
 import com.testeTecnico.revenda.model.request.TransferenciaOportunidadeRequestDTO;
 import com.testeTecnico.revenda.model.response.ClienteResponseDTO;
@@ -50,7 +51,7 @@ public class OportunidadeController {
 
     @PutMapping("/modificar-oportunidade")
     @PreAuthorize("hasAnyRole('ADMINISTRADOR','PROPRIETARIO', 'GERENTE', 'ASSISTENTE')")
-    public ResponseEntity<OportunidadeResponseDTO> modificarOportunidade(@RequestBody OportunidadeRequestDTO requestDTO, Authentication authentication){
+    public ResponseEntity<OportunidadeResponseDTO> modificarOportunidade(@RequestBody ModificaOportunidadeRequestDTO requestDTO, Authentication authentication){
         return oportunidadeService.modificarOportunidade(requestDTO, authentication);
     }
 }

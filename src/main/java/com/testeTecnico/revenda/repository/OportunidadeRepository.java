@@ -13,4 +13,6 @@ public interface OportunidadeRepository extends JpaRepository<OportunidadeEntity
     List<OportunidadeEntity> findAllByRevendaId(long id);
 
     List<OportunidadeEntity> findAllByRevendaIdAndStatusNot(long id, StatusOportunidade statusOportunidade);
+
+    OportunidadeEntity findByVeiculoId(long id);
 }

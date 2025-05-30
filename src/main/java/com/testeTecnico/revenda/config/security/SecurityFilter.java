@@ -40,12 +40,13 @@ public class SecurityFilter extends OncePerRequestFilter {
             UserDetails userDetails = usuarioRepository.findByEmail(subject);
             DecodedJWT jwt = JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
             Long revendaId = jwt.getClaim("revenda_id").asLong();
-            Long usuarioId = jwt.getClaim("usuarioId").asLong();
+            Long usuarioId = jwt.getClaim("usuario_id").asLong();
+            String user_role = jwt.getClaim("user_role").asString();
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             Map<String, Object> details = new HashMap<>();
             details.put("revenda_id", revendaId);
-            details.put("usuarioId", usuarioId);
-            details.put("userRole", authenticationToken.getAuthorities());
+            details.put("usuario_id", usuarioId);
+            details.put("user_role", user_role);
             authenticationToken.setDetails(details);
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }

@@ -27,15 +27,20 @@ public class Utils {
     private RevendaRepository revendaRepository;
     @Autowired
     private VeiculoRepository veiculoRepository;
-    public String getUserRole(Authentication authentication){
-        return authentication.getAuthorities().iterator().next().getAuthority();
+    public String getUserRole(Authentication auth){
+        return (String) recuperarInformacoesJwtToken(auth).get("user_role");
     }
 
     public Map<String, Object> recuperarInformacoesJwtToken(Authentication auth){
         Map<String, Object> details = (Map<String, Object>) auth.getDetails();
         return details;
     }
-
+    public Long getUsuarioIdFromJwtToken(Authentication auth){
+        return (Long) recuperarInformacoesJwtToken(auth).get("usuario_id");
+    }
+    public Long getRevendaIdFromJwtToken(Authentication auth){
+        return (Long) recuperarInformacoesJwtToken(auth).get("revenda_id");
+    }
     public ClienteEntity clienteValido(long id) throws Exception {
         ClienteEntity cliente = clienteRepository.findById(id).orElse(null);
         if(cliente == null){

@@ -2,6 +2,7 @@ package com.testeTecnico.revenda.util.mapper;
 
 
 import com.testeTecnico.revenda.model.*;
+import com.testeTecnico.revenda.model.request.ModificaOportunidadeRequestDTO;
 import com.testeTecnico.revenda.model.request.OportunidadeRequestDTO;
 import com.testeTecnico.revenda.model.response.OportunidadeResponseDTO;
 import org.mapstruct.Mapper;
@@ -23,5 +24,6 @@ public interface OportunidadeMapper {
     @Mapping(source = "usuarioEntity", target = "usuario")
     OportunidadeEntity toEntityFromRequestDto(OportunidadeRequestDTO oportunidadeRequestDTO, ClienteEntity cliente, VeiculoEntity veiculo, RevendaEntity revenda, UsuarioEntity usuarioEntity);
 
+    OportunidadeRequestDTO toOportunidadeRequestFromModificaOportunidadeRequest(ModificaOportunidadeRequestDTO modificaOportunidadeRequestDTO);
 
 }

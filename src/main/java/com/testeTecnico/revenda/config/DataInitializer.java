@@ -63,7 +63,6 @@ public class DataInitializer {
             }
 
 
-            System.out.println("Dados iniciais inseridos com sucesso.");
         };
     }
 }

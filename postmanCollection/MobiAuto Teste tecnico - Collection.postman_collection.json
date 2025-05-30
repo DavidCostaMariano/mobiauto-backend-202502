@@ -1,0 +1,436 @@
+{
+	"info": {
+		"_postman_id": "211b1b22-575a-46b4-b660-ec2ded128bc3",
+		"name": "MobiAuto Teste tecnico - Collection",
+		"description": "# 📚 Documentação da API - MobiAuto Teste tecnico\n\nEsta documentação descreve todos os endpoints da collection MobiAuto Teste tecnico, organizados em sequência lógica para facilitar os testes e validação da aplicação.\n\n---\n\n## 🔐 1. Login do Usuário\n\n**Endpoint:** `POST /usuario/login`  \n**Descrição:** Realiza autenticação do usuário e retorna um token JWT.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n    \"email\":\"admin@revenda.com\",\n    \"senha\":\"adminPassword123\"\n}\n\n ```\n\n### 🧠 Observações:\n\n- O token JWT retornado é automaticamente salvo na variável da collection.\n    \n- Essa variável é usada para autenticação nos próximos endpoints via header.\n    \n\n---\n\n## 🏢 2. Criar Revenda\n\n**Endpoint:** `POST /revenda/criar-revenda`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"cnpj\": \"83653603000110\",\n  \"nome_social\": \"Revenda Auto Calibre\"\n}\n\n ```\n\n---\n\n## 👤 3. Criar Usuário\n\n**Endpoint:** `POST /usuario/criar-usuario`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"nome\": \"Joao Proprietario\",\n  \"email\": \"joaoProprietario@gmail.com\",\n  \"senha\": \"123456\",\n  \"cargo\": \"PROPRIETARIO\",\n  \"revenda_id\": 2\n}\n\n ```\n\n---\n\n## 🔄 4. Modificar Usuário\n\n**Endpoint:** `POST /usuario/modificar-usuario`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"id\": 2,\n  \"nome\": \"João Gerente\",\n  \"email\": \"joaogerente@email.com\",\n  \"senha\": \"123456\",\n  \"cargo\": \"GERENTE\",\n  \"revenda_id\": 2\n}\n\n ```\n\n---\n\n## 💼 5. Criar Oportunidade\n\n**Endpoint:** `POST /oportunidade/criar-oportunidade`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"cliente_id\": 1,\n  \"veiculo_id\": 1,\n  \"revendedora_id\": 1\n}\n\n ```\n\n---\n\n## 📄 6. Listar Oportunidades por Revenda\n\n**Endpoint:** `GET /oportunidade/listar-oportunidade/revenda/${id}`  \n**Autenticação:** Requer token JWT no header.\n\n---\n\n## 🔁 7. Alterar Status da Oportunidade\n\n**Endpoint:** `PUT /oportunidade/alterar-oportunidade`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"id\": 1,\n  \"status\": \"CONCLUIDO\"\n}\n\n ```\n\n---\n\n## 🔄 8. Transferir Oportunidade\n\n**Endpoint:** `PUT /oportunidade/transferir`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"usuario_origem_id\": 1,\n  \"usuario_destino_id\": 2,\n  \"oportunidade_id\": 1\n}\n\n ```\n\n---\n\n## 👥 9. Criar veiculo\n\n**Endpoint:** `POST /veiculo/criar-veiculo`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"marca\": \"Volkswagen\",\n  \"modelo\": \"Voyage\",\n  \"versao\": \"2012\",\n  \"ano_modelo\": \"2012\"\n}\n\n ```\n\n---\n\n## 👥 10. Criar Cliente\n\n**Endpoint:** `POST /cliente/criar-cliente`  \n**Autenticação:** Requer token JWT no header.\n\n### ✅ Corpo da requisição:\n\n``` json\n{\n  \"nome\": \"Cliente David\",\n  \"email\": \"emaildavid@gmail.com\",\n  \"telefone\": \"11123456789\"\n}\n\n ```\n\n---\n\n## 🔄 11. Modificar Oportunidade\n\n**Endpoint:** `GET /oportunidade/modificar-oportunidade`  \n**Autenticação:** Requer token JWT no header.\n\n``` json\n{\n  \"id\": 1,\n  \"cliente_id\": 2,\n  \"veiculo_id\": 2,\n  \"revendedora_id\": 1\n}\n\n ```\n\n---\n\n## 🧪 Variáveis Utilizadas\n\n| Variável | Tipo | Descrição |\n| --- | --- | --- |\n| `token` | Collection | Armazena o token JWT retornado no login |\n\n---\n\n## 📌 Notas Finais\n\n- A collection está pronta para uso, com autenticação automatizada.\n    \n- Os headers de autorização estão configurados com `token` em todas as requisições protegidas.\n    \n- A ordem de execução deve ser respeitada para evitar erros de dependência (ex: criar cliente e veículo antes da oportunidade).\n    \n\n---",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22006981",
+		"_collection_link": "https://solar-flare-457729.postman.co/workspace/d4865050-fbc9-46bf-ae86-abd00256f8d4/collection/22006981-211b1b22-575a-46b4-b660-ec2ded128bc3?action=share&source=collection_link&creator=22006981"
+	},
+	"item": [
+		{
+			"name": "Login usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"const token = response.token;\r",
+							"\r",
+							"pm.collectionVariables.set(\"token\", \"Bearer \" + token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@revenda.com\",\r\n    \"senha\":\"adminPassword123\"\r\n}\r\n\r\n/*\r\n{\r\n    \"email\":\"joaoProprietario@email.com\",\r\n    \"senha\":\"123456\"\r\n}\r\n*/\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuario/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuario",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar revenda",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cnpj\":\"83653603000110\",\r\n    \"nome_social\": \"Revenda Auto Calibre\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/revenda/criar-revenda",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"revenda",
+						"criar-revenda"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"Joao Proprietario\",\r\n  \"email\": \"joaoProprietario@gmail.com\",\r\n  \"senha\": \"123456\",\r\n  \"cargo\": \"PROPRIETARIO\",\r\n  \"revenda_id\": 2\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuario/criar-usuario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuario",
+						"criar-usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"nome\": \"João Gerente\",\r\n    \"email\": \"joaogerente@email.com\",\r\n    \"senha\": \"123456\",\r\n    \"cargo\": \"GERENTE\",\r\n    \"revenda_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuario/modificar-usuario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuario",
+						"modificar-usuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar oportunidade",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cliente_id\": 1,\r\n    \"veiculo_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/oportunidade/criar-oportunidade",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oportunidade",
+						"criar-oportunidade"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar oportunidades",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/oportunidade/listar-oportunidade/revenda/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oportunidade",
+						"listar-oportunidade",
+						"revenda",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar status oportunidade",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 4,\r\n    \"status\": \"EM_ATENDIMENTO\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/oportunidade/alterar-status-oportunidade",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oportunidade",
+						"alterar-status-oportunidade"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transferir oportunidade",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"usuario_origem_id\":1,\r\n    \"usuario_destino_id\": 2,\r\n    \"oportunidade_id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/oportunidade/transferir",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oportunidade",
+						"transferir"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar veiculo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"marca\": \"Chevrolet\",\r\n    \"modelo\": \"Corsa\",\r\n    \"versao\": \"2012\",\r\n    \"ano_modelo\": \"2012\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/veiculo/criar-veiculo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"veiculo",
+						"criar-veiculo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar cliente",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Cliente David\",\r\n    \"email\": \"david@gmail.com\",\r\n    \"telefone\": \"11944638264\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/cliente/criar-cliente",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cliente",
+						"criar-cliente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar oportunidade",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"status\": \"EM_ATENDIMENTO\",\r\n  \"motivo_conclusao\": \"TESTE\",\r\n  \"cliente_id\": 2,\r\n  \"veiculo_id\": 2,\r\n  \"revendedora_id\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/oportunidade/modificar-oportunidade",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"oportunidade",
+						"modificar-oportunidade"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

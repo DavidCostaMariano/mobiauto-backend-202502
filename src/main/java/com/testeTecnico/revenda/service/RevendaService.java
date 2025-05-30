@@ -32,12 +32,12 @@ public class RevendaService {
     }
 
 
-    public boolean revendaAtendeRequisitos(RevendaRequestDTO requestDTO) throws Exception {
+    private boolean revendaAtendeRequisitos(RevendaRequestDTO requestDTO) throws Exception {
         if(cnpjValido(requestDTO.cnpj()) && !cnpjPresenteNaBase(requestDTO)) return true;
         return false;
     }
 
-    public boolean cnpjValido(String cnpj) throws Exception {
+    private boolean cnpjValido(String cnpj) throws Exception {
         CNPJValidator cnpjValidator = new CNPJValidator();
         try{
             cnpjValidator.assertValid(cnpj);
@@ -47,7 +47,7 @@ public class RevendaService {
         }
     }
 
-    public boolean cnpjPresenteNaBase(RevendaRequestDTO requestDTO) throws Exception {
+    private boolean cnpjPresenteNaBase(RevendaRequestDTO requestDTO) throws Exception {
         if(revendaRepository.findByCnpj(requestDTO.cnpj()) != null) throw new Exception("CNPJ PRESENTE NA BASE");
         return false;
 
